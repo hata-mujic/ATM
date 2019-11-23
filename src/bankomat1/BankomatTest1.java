@@ -68,8 +68,7 @@ public class BankomatTest1 {
 
 		}
 		
-		Racun.nizRacuna(racun);
-		toString
+		
 
 		input.close();
 	}
