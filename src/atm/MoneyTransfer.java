@@ -1,8 +1,11 @@
 package atm;
 
-import java.util.ArrayList;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.StringTokenizer;
 
-public class MoneyTransfer {
+public class MoneyTransfer extends UsersAccount {
 
 	int sourceAccount;
 	int targetAccount;
@@ -41,49 +44,69 @@ public class MoneyTransfer {
 	public void setTransferAmount(double transferAmount) {
 		this.transferAmount = transferAmount;
 	}
+
 /////////////////////////////////////////////////////////////////////////////////////
+	public boolean findSourceAccount() throws IOException {
+		BufferedReader br = new BufferedReader(new FileReader("vjezba11.txt"));
+		String line;
+		int i = -1;
 
-	public boolean findSourceAccount(ArrayList<UsersAccount> _account) {
-		for (UsersAccount e : _account) {
-			if (e.getAccountNumber() == getSourceAccount()) {
-				return true;
+		while ((line = br.readLine()) != null) {
+			StringTokenizer st = new StringTokenizer(line);
+			
+			setName(st.nextToken());
+			setAccountNumber(Integer.parseInt(st.nextToken()));
+			setAccountBalanse(Double.parseDouble(st.nextToken()));
+			
+			if (getAccountNumber() == getSourceAccount()) {
+				i = 1;
 			}
 		}
-		return false;
+
+		br.close();
+		return i == 1 ? true : false;
 	}
 
-	public boolean findTargetAccount(ArrayList<UsersAccount> _account) {
-		for (UsersAccount e : _account) {
-			if (e.getAccountNumber() == getTargetAccount()) {
-				return true;
+	public boolean findTargetAccount() throws IOException {
+		BufferedReader br = new BufferedReader(new FileReader("vjezba11.txt"));
+		String line;
+		int i = -1;
+
+		while ((line = br.readLine()) != null) {
+			StringTokenizer st = new StringTokenizer(line);
+			
+			setName(st.nextToken());
+			setAccountNumber(Integer.parseInt(st.nextToken()));
+			setAccountBalanse(Double.parseDouble(st.nextToken()));
+			
+			if (getAccountNumber() == getTargetAccount()) {
+				i = 1;
 			}
 		}
-		return false;
+
+		br.close();
+		return i == 1 ? true : false;
 	}
 
+	public boolean checkingBalanseSource() throws NumberFormatException, IOException {
+		BufferedReader br = new BufferedReader(new FileReader("vjezba11.txt"));
+		String line;
+		int i = -1;
 
-	public boolean checkingBalanseSource(ArrayList<UsersAccount> _account) {
-		for (UsersAccount e : _account) {
-			if (e.getAccountNumber() == getSourceAccount() && e.getAccountBalanse() > getTransferAmount()) {
-				return true;
+		while ((line = br.readLine()) != null) {
+			StringTokenizer st = new StringTokenizer(line);
+			
+			setName(st.nextToken());
+			setAccountNumber(Integer.parseInt(st.nextToken()));
+			setAccountBalanse(Double.parseDouble(st.nextToken()));
+
+			if (getAccountNumber() == getSourceAccount() && getAccountBalanse() > getTransferAmount()) {
+				i = 1;
 			}
 		}
-		return false;
-	}
-
-	public void transferToNewAccount(ArrayList<UsersAccount> _account) {
-		for (UsersAccount e : _account) {
-			if (e.getAccountNumber() == getSourceAccount()) {
-				e.setAccountBalanse(e.getAccountBalanse() - getTransferAmount());
-			}
-		}
-
-		for (UsersAccount e : _account) {
-			if (e.getAccountNumber() == getTargetAccount()) {
-				e.setAccountBalanse(e.getAccountBalanse() + getTransferAmount());
-			}
-		}
-
+		
+		br.close();
+		return i == 1 ? true : false;
 	}
 
 }

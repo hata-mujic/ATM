@@ -1,6 +1,9 @@
 package atm;
 
-import java.util.ArrayList;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.StringTokenizer;
 
 public class UsersAccount {
 	private String name;
@@ -46,20 +49,31 @@ public class UsersAccount {
 		return "name=" + name + ", accountNumber=" + accountNumber + ", accountBalanse=" + accountBalanse;
 	}
 
-	public static boolean checkingAccountNumber(ArrayList<UsersAccount> _accunts, int _accountNumber) {
-		for (UsersAccount e : _accunts) {
-			if (e.getAccountNumber() != _accountNumber) {
-				return true;
-			}
+	public boolean checkingAccountNegativity() {
+		if (getAccountNumber() < 0 || getAccountBalanse() < 0) {
+			return false;
 		}
-		return false;
+		return true;
 	}
 
-	public static boolean checkingAccountNegativity(int _accountNumber, double _accountBalanse) {
-		if (_accountNumber > 0 && _accountBalanse > 0) {
-			return true;
+	public boolean checkingAccountNumber() throws IOException {
+		int i = -1;
+		String line;
+		BufferedReader br = new BufferedReader(new FileReader("vjezba11.txt"));
+
+		while ((line = br.readLine()) != null) {
+			StringTokenizer st = new StringTokenizer(line);
+			setName(st.nextToken());
+
+			int account = Integer.parseInt(st.nextToken());
+
+			if (account == getAccountNumber()) {
+				i = 1;
+			}
+			//setAccountBalanse(Double.parseDouble(st.nextToken()));
 		}
-		return false;
+		br.close();
+		return i == -1 ? true : false;
 
 	}
 
