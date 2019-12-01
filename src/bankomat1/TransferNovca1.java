@@ -34,37 +34,47 @@ public class TransferNovca1 extends KreiranjeRacuna1 {
 		this.targetAccount = targetAccount;
 	}
 
-	public double getIznosKojiSePrebacuje() {
+	public double getTransferAmount() {
 		return transferAmount;
 	}
 
-	public void setIznosKojiSePrebacuje(double transferAmount) {
+	public void setTransferAmount(double transferAmount) {
 		this.transferAmount = transferAmount;
 	}
 
-	public boolean sourceLessThanTarget(double getBalanceSource, double getBalanceTarget) {
-		if (getBalanceSource > getBalanceTarget) {
-			return true;
-		} else {
-			return false;
+	public double findBalansSource(ArrayList<KreiranjeRacuna1> _account) {
+		for (KreiranjeRacuna1 e : _account) {
+			if (e.getBrojRacuna() == getSourceAccount()) {
+				return e.getStanjeRacuna();
+			}
 		}
-
+		return -1;
 	}
 
-	public static boolean numbersAccountSource(ArrayList<Integer> _arrayAccounts, int _sourceAccount) {
-		if (_arrayAccounts.contains(_sourceAccount)) {
-			return true;
-		} else {
-			return false;
+	public boolean findBalansTarget(ArrayList<KreiranjeRacuna1> _account) {
+		for (KreiranjeRacuna1 e : _account) {
+			if (e.getBrojRacuna() == getTargetAccount()) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public boolean sourceLessThanTarget(double getBalanceSource) {
+		return getBalanceSource > getTransferAmount();
+	}
+
+	public void transferToNewAccount(ArrayList<KreiranjeRacuna1> _account) {
+		for (KreiranjeRacuna1 e : _account) {
+			if (e.getBrojRacuna() == getSourceAccount()) {
+				e.setStanjeRacuna(e.getStanjeRacuna() - getTransferAmount());
+			}
 		}
 
-	}
-	
-	public static boolean numbersAccountTarget(ArrayList<Integer> _arrayAccounts, int _targetAccount) {
-		if (_arrayAccounts.contains(_targetAccount)) {
-			return true;
-		} else {
-			return false;
+		for (KreiranjeRacuna1 e : _account) {
+			if (e.getBrojRacuna() == getTargetAccount()) {
+				e.setStanjeRacuna(e.getStanjeRacuna() + getTransferAmount());
+			}
 		}
 
 	}

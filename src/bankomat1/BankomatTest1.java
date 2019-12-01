@@ -11,10 +11,10 @@ public class BankomatTest1 {
 		ArrayList<Integer> nizBrojaRacuna = new ArrayList<>();
 		ArrayList<KreiranjeRacuna1> racun = new ArrayList<>();
 
-		KreiranjeRacuna1 racun1 = new KreiranjeRacuna1("hata", 1, 1);
+		KreiranjeRacuna1 racun1 = new KreiranjeRacuna1("Hata", 123, 333.3);
 		racun.add(racun1);
 		nizBrojaRacuna.add(racun1.getBrojRacuna());
-		KreiranjeRacuna1 racun2 = new KreiranjeRacuna1("hata1", 2, 111);
+		KreiranjeRacuna1 racun2 = new KreiranjeRacuna1("Kadira", 124, 111.1);
 		racun.add(racun2);
 		nizBrojaRacuna.add(racun2.getBrojRacuna());
 
@@ -53,7 +53,7 @@ public class BankomatTest1 {
 		for (int i = 0; i < racun.size(); i++) {
 			System.out.println(racun.get(i));
 		}
-
+//////////////////////////////////////////////////////////////////////////////////////////////////////
 		System.out.println("Unesite broj racuna sa kojega šaljete:");
 		int sourceAccount = input.nextInt();
 		System.out.println("Unesite broj racuna kojem šaljete:");
@@ -61,14 +61,15 @@ public class BankomatTest1 {
 		System.out.println("Unesite iznos novca koji šaljete:");
 		double transferAmount = input.nextDouble();
 
-		TransferNovca1 transfer1 = new TransferNovca1(sourceAccount, targetAccount, transferAmount);
-
-		if (TransferNovca1.numbersAccountSource(nizBrojaRacuna, sourceAccount) == true
-				&& TransferNovca1.numbersAccountTarget(nizBrojaRacuna, targetAccount) == true) {
-
+		TransferNovca1 transferNovca1 = new TransferNovca1(sourceAccount, targetAccount, transferAmount);
+		if (transferNovca1.findBalansSource(racun) !=-1 && transferNovca1.findBalansTarget(racun) ==true
+				&& transferNovca1.sourceLessThanTarget(transferNovca1.findBalansSource(racun)) == true) {
+			transferNovca1.transferToNewAccount(racun);
 		}
 		
-		
+		for(KreiranjeRacuna1 e: racun) {
+			System.out.println(e+ " ");
+		}
 
 		input.close();
 	}
