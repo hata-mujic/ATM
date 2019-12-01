@@ -20,25 +20,24 @@ public class UsersBasa extends MoneyTransfer {
 		System.out.println("*********************************************************");
 		System.out.println("*********************************************************");
 		System.out.println("\n");
-		String name; 
+		String name;
 		int aN;
 		double aB;
 
 		do {
 			System.out.print("Enter a name: ");
-			name=input.next();
+			name = input.next();
 
 			System.out.print("Enter the account number: ");
-			aN=input.nextInt();
+			aN = input.nextInt();
 
 			System.out.print("Enter the account balance: ");
-			aB=input.nextDouble();
+			aB = input.nextDouble();
 
 			System.out.println("---------------------------------------------------------");
 			System.out.println("---------------------------------------------------------");
 
 		} while (checkingAccountNegativity() == false || checkingAccountNumber() == false);
-
 
 		bw.write(name + " " + aN + " " + aB);
 
@@ -52,7 +51,7 @@ public class UsersBasa extends MoneyTransfer {
 
 	public void transferMoney() throws IOException {
 		Scanner input = new Scanner(System.in);
-		
+
 		System.out.println("\t\tTransfer money.");
 		System.out.println("*********************************************************");
 		System.out.println("*********************************************************");

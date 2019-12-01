@@ -70,7 +70,7 @@ public class UsersAccount {
 			if (account == getAccountNumber()) {
 				i = 1;
 			}
-			//setAccountBalanse(Double.parseDouble(st.nextToken()));
+			// setAccountBalanse(Double.parseDouble(st.nextToken()));
 		}
 		br.close();
 		return i == -1 ? true : false;
