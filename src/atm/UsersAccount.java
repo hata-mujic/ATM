@@ -1,9 +1,10 @@
 package atm;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.StringTokenizer;
+import java.util.Scanner;
 
 public class UsersAccount {
 	private String name;
@@ -56,25 +57,28 @@ public class UsersAccount {
 		return true;
 	}
 
-	public boolean checkingAccountNumber() throws IOException {
+	public boolean checkingAccountNumber(int account) throws IOException {
 		int i = -1;
-		String line;
-		BufferedReader br = new BufferedReader(new FileReader("vjezba11.txt"));
+		BufferedReader br = new BufferedReader(new FileReader("file.txt"));
+		File file = new File("file.txt");
+		Scanner sc = new Scanner(file);
 
-		while ((line = br.readLine()) != null) {
-			StringTokenizer st = new StringTokenizer(line);
-			setName(st.nextToken());
+		while ((br.readLine()) != null) {
+			while (sc.hasNext()) {
 
-			int account = Integer.parseInt(st.nextToken());
-
-			if (account == getAccountNumber()) {
-				i = 1;
+				setName(sc.next());
+				setAccountNumber(Integer.parseInt(sc.next()));
+				setAccountBalanse(Double.parseDouble(sc.next()));
+				if (getAccountNumber() == account) {
+					i = 1;
+				}
 			}
-			// setAccountBalanse(Double.parseDouble(st.nextToken()));
 		}
+		sc.close();
 		br.close();
 		return i == -1 ? true : false;
 
 	}
 
 }
+
