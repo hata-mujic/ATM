@@ -1,18 +1,15 @@
 package atm;
 
-import java.io.BufferedReader;
 import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
 
-public class UsersBasa extends MoneyTransfer {
+public class UsersBasa extends ArrayBasa {
+
+	Scanner input = new Scanner(System.in);
 
 	public void addUser() throws IOException {
-
-		Scanner input = new Scanner(System.in);
 		BufferedWriter bw = new BufferedWriter(new FileWriter("file.txt", true));
 
 		System.out.println("\t\t Creating a bank account.");
@@ -20,43 +17,76 @@ public class UsersBasa extends MoneyTransfer {
 		System.out.println("*********************************************************");
 		System.out.println("\n");
 
-		String name;
-		int aN;
-		double aB;
+		System.out.print("Enter a name: ");
+		String name = input.next();
+		setName(name);
 
-		do {
+		System.out.print("Enter the account number: ");
+		int aNumber = input.nextInt();
+		setAccountNumber(aNumber);
+
+		System.out.print("Enter the account balance: ");
+		double bNumber = input.nextDouble();
+		setAccountBalanse(bNumber);
+
+		while (checkingAccountNegativity(getAccountNumber(), getAccountBalanse()) == false
+				|| checkingAccountNumber(getAccountNumber()) == false) {
+
+			System.out.println("\n");
+			System.out.println("**************** <<==WRONG ENTRY ************************");
+			System.out.println("****************** TRY AGAIN==>> ************************");
+			System.out.println("\n");
+
 			System.out.print("Enter a name: ");
 			name = input.next();
+			setName(name);
 
 			System.out.print("Enter the account number: ");
-			aN = input.nextInt();
+			aNumber = input.nextInt();
+			setAccountNumber(aNumber);
 
 			System.out.print("Enter the account balance: ");
-			aB = input.nextDouble();
+			bNumber = input.nextDouble();
+			setAccountBalanse(bNumber);
+		}
 
-			System.out.println("---------------------------------------------------------");
-			System.out.println("---------------------------------------------------------");
+		System.out.println("\n");
+		System.out.println("************ Your account has been created. *************");
+		System.out.println("\n");
 
-		} while (checkingAccountNegativity() == false || checkingAccountNumber(aN) == false);
-
-		bw.write(name + " " + aN + " " + aB);
-
+		bw.write((new UsersAccount(name, aNumber, bNumber)).toString());
 		bw.flush();
 		bw.newLine();
 		bw.close();
-		input.close();
+
+		fillingArrayFromFile();
 
 	}
 
 	public void transferMoney() throws IOException {
-		Scanner input = new Scanner(System.in);
 
 		System.out.println("\t\tTransfer money.");
 		System.out.println("*********************************************************");
 		System.out.println("*********************************************************");
 		System.out.println("\n");
 
-		do {
+		System.out.print("Enter the account number from which you are sending: ");
+		setSourceAccount(input.nextInt());
+
+		System.out.print("Enter the account number you are sending: ");
+		setTargetAccount(input.nextInt());
+
+		System.out.print("Enter the amount of money you want to send: ");
+		setTransferAmount(input.nextDouble());
+
+		while (findSourceAccount() == false || findTargetAccount() == false || checkingBalanseSource() == false
+				|| getTransferAmount() < 0) {
+
+			System.out.println("\n");
+			System.out.println("**************** <<==WRONG ENTRY ************************");
+			System.out.println("****************** TRY AGAIN==>> ************************");
+			System.out.println("\n");
+
 			System.out.print("Enter the account number from which you are sending: ");
 			setSourceAccount(input.nextInt());
 
@@ -66,86 +96,14 @@ public class UsersBasa extends MoneyTransfer {
 			System.out.print("Enter the amount of money you want to send: ");
 			setTransferAmount(input.nextDouble());
 
-			System.out.println("---------------------------------------------------------");
-			System.out.println("---------------------------------------------------------");
-
-		} while (findSourceAccount() == false || findTargetAccount() == false || checkingBalanseSource() == false);
-
-		input.close();
-
-		withdrawAndDepozitMoney();
-	}
-
-	
-	public void withdrawAndDepozitMoney() throws IOException {
-
-		File oldFile = new File("file.txt");
-		File tempFile = new File("tFile.txt");
-
-		BufferedReader br = new BufferedReader(new FileReader(oldFile));
-		BufferedWriter bw = new BufferedWriter(new FileWriter(tempFile));
-
-		Scanner sc = new Scanner(oldFile);
-		String line;
-
-		while ((line = br.readLine()) != null) {
-
-			while (sc.hasNext()) {
-				
-				setName(sc.next());
-				setAccountNumber(Integer.parseInt(sc.next()));
-				setAccountBalanse(Double.parseDouble(sc.next()));
-
-				if (getAccountNumber() == getSourceAccount()) {
-					bw.write(getName() + " " + getAccountNumber() + " " + (getAccountBalanse() - getTransferAmount()));
-				} else if (getAccountNumber() == getTargetAccount()) {
-					bw.write(getName() + " " + getAccountNumber() + " " + (getAccountBalanse() + getTransferAmount()));
-				} else {
-					bw.write(line);
-				}
-				bw.flush();
-				bw.newLine();
-			}
-			
 		}
-		bw.close();
-		br.close();
-		sc.close();
 
-		oldFile.delete();
-
-		boolean success = tempFile.renameTo(oldFile);
-		System.out.println(success);
-
-	}
-
-	public void viewAllDataUser() throws IOException {
-		BufferedReader br = new BufferedReader(new FileReader("file.txt"));
-		File file = new File("file.txt");
-
-		Scanner sc = new Scanner(file);
-
-		System.out.println("\t\tList of users");
-		System.out.println("*********************************************************");
-		System.out.println("*********************************************************");
+		System.out.println("\n");
+		System.out.println("************* Your money have transferred. **************");
 		System.out.println("\n");
 
-		while ((br.readLine()) != null) {
-			while (sc.hasNext()) {
+		transferToNewAccount();
 
-				setName(sc.next());
-				setAccountNumber(Integer.parseInt(sc.next()));
-				setAccountBalanse(Double.parseDouble(sc.next()));
-
-				System.out.println("User name: " + getName());
-				System.out.println("User account: " + getAccountNumber());
-				System.out.println("User account balance: " + getAccountBalanse());
-				System.out.println("---------------------------------------------------------");
-				System.out.println("---------------------------------------------------------");
-			}
-		}
-		sc.close();
-		br.close();
 	}
 
 }
