@@ -1,6 +1,7 @@
 package atm;
 
 import java.io.IOException;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class AtmTest {
@@ -11,7 +12,7 @@ public class AtmTest {
 		UsersBasa usersBasa = new UsersBasa();
 		ArrayBasa arrayBasa = new ArrayBasa();
 
-		int choice;
+		int choice = -1;
 		String toContinue = "y";
 
 		while (toContinue.equalsIgnoreCase("y")) {
@@ -20,9 +21,24 @@ public class AtmTest {
 			System.out.println("2 ===> Transfer Money ");
 			System.out.println("3 ===> View All Users Record ");
 
-			System.out.print("\n\n");
-			System.out.println("Enter your choice: ");
-			choice = input1.nextInt();
+			boolean correct = false;
+
+			do {
+				try {
+					correct = true;
+
+					System.out.print("\n");
+					System.out.println("Enter your choice: ");
+					choice = input1.nextInt();
+
+				} catch (InputMismatchException e) {
+
+					System.out.println("\tWrong input, enter again ==>>");
+					input1.nextLine();
+					correct = false;
+				}
+
+			} while (correct == false);
 
 			switch (choice) {
 			case 1:

@@ -3,6 +3,7 @@ package atm;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class UsersBasa extends ArrayBasa {
@@ -12,22 +13,40 @@ public class UsersBasa extends ArrayBasa {
 	public void addUser() throws IOException {
 		BufferedWriter bw = new BufferedWriter(new FileWriter("file.txt", true));
 
+		boolean correct = false;
+		String name = "";
+		int aNumber = 0;
+		double bNumber = 0;
+
 		System.out.println("\t\t Creating a bank account.");
 		System.out.println("*********************************************************");
 		System.out.println("*********************************************************");
 		System.out.println("\n");
 
-		System.out.print("Enter a name: ");
-		String name = input.next();
-		setName(name);
+		do {
 
-		System.out.print("Enter the account number: ");
-		int aNumber = input.nextInt();
-		setAccountNumber(aNumber);
+			try {
+				correct = true;
+				System.out.print("Enter a name: ");
+				name = input.next();
+				setName(name);
 
-		System.out.print("Enter the account balance: ");
-		double bNumber = input.nextDouble();
-		setAccountBalanse(bNumber);
+				System.out.print("Enter the account number: ");
+				aNumber = input.nextInt();
+				setAccountNumber(aNumber);
+
+				System.out.print("Enter the account balance: ");
+				bNumber = input.nextDouble();
+				setAccountBalanse(bNumber);
+
+			} catch (InputMismatchException e) {
+
+				System.out.println("\tWrong input, enter again ==>>");
+				input.nextLine();
+				correct = false;
+			}
+
+		} while (correct == false);
 
 		while (checkingAccountNegativity(getAccountNumber(), getAccountBalanse()) == false
 				|| checkingAccountNumber(getAccountNumber()) == false) {
@@ -37,17 +56,31 @@ public class UsersBasa extends ArrayBasa {
 			System.out.println("****************** TRY AGAIN==>> ************************");
 			System.out.println("\n");
 
-			System.out.print("Enter a name: ");
-			name = input.next();
-			setName(name);
+			do {
 
-			System.out.print("Enter the account number: ");
-			aNumber = input.nextInt();
-			setAccountNumber(aNumber);
+				try {
+					correct = true;
+					System.out.print("Enter a name: ");
+					name = input.next();
+					setName(name);
 
-			System.out.print("Enter the account balance: ");
-			bNumber = input.nextDouble();
-			setAccountBalanse(bNumber);
+					System.out.print("Enter the account number: ");
+					aNumber = input.nextInt();
+					setAccountNumber(aNumber);
+
+					System.out.print("Enter the account balance: ");
+					bNumber = input.nextDouble();
+					setAccountBalanse(bNumber);
+
+				} catch (InputMismatchException e) {
+
+					System.out.println("\tWrong input, enter again ==>>");
+					input.nextLine();
+					correct = false;
+				}
+
+			} while (correct == false);
+
 		}
 
 		System.out.println("\n");
@@ -65,19 +98,34 @@ public class UsersBasa extends ArrayBasa {
 
 	public void transferMoney() throws IOException {
 
+		boolean correct = false;
+
 		System.out.println("\t\tTransfer money.");
 		System.out.println("*********************************************************");
 		System.out.println("*********************************************************");
 		System.out.println("\n");
 
-		System.out.print("Enter the account number from which you are sending: ");
-		setSourceAccount(input.nextInt());
+		do {
+			try {
+				correct = true;
 
-		System.out.print("Enter the account number you are sending: ");
-		setTargetAccount(input.nextInt());
+				System.out.print("Enter the account number from which you are sending: ");
+				setSourceAccount(input.nextInt());
 
-		System.out.print("Enter the amount of money you want to send: ");
-		setTransferAmount(input.nextDouble());
+				System.out.print("Enter the account number you are sending: ");
+				setTargetAccount(input.nextInt());
+
+				System.out.print("Enter the amount of money you want to send: ");
+				setTransferAmount(input.nextDouble());
+
+			} catch (InputMismatchException e) {
+
+				System.out.println("\tWrong input, enter again ==>>");
+				input.nextLine();
+				correct = false;
+			}
+
+		} while (correct == false);
 
 		while (findSourceAccount() == false || findTargetAccount() == false || checkingBalanseSource() == false
 				|| getTransferAmount() < 0) {
@@ -87,14 +135,27 @@ public class UsersBasa extends ArrayBasa {
 			System.out.println("****************** TRY AGAIN==>> ************************");
 			System.out.println("\n");
 
-			System.out.print("Enter the account number from which you are sending: ");
-			setSourceAccount(input.nextInt());
+			do {
+				try {
+					correct = true;
 
-			System.out.print("Enter the account number you are sending: ");
-			setTargetAccount(input.nextInt());
+					System.out.print("Enter the account number from which you are sending: ");
+					setSourceAccount(input.nextInt());
 
-			System.out.print("Enter the amount of money you want to send: ");
-			setTransferAmount(input.nextDouble());
+					System.out.print("Enter the account number you are sending: ");
+					setTargetAccount(input.nextInt());
+
+					System.out.print("Enter the amount of money you want to send: ");
+					setTransferAmount(input.nextDouble());
+
+				} catch (InputMismatchException e) {
+
+					System.out.println("\tWrong input, enter again ==>>");
+					input.nextLine();
+					correct = false;
+				}
+
+			} while (correct == false);
 
 		}
 
