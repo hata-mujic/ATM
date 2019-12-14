@@ -49,8 +49,7 @@ public class ArrayBasa extends MoneyTransfer {
 	}
 
 /////////////////////////////////////////////////////////////////
-	public boolean checkingAccountNumber(int _accountNumber) throws NumberFormatException, IOException {
-		fillingArrayFromFile();
+	public boolean checkingAccountNumber(int _accountNumber) {
 
 		for (UsersAccount e : accounts) {
 			if (e.getAccountNumber() == _accountNumber) {
@@ -65,8 +64,7 @@ public class ArrayBasa extends MoneyTransfer {
 	}
 
 ///////////////////////////////////////////////////////////////////////
-	public boolean findSourceAccount() throws NumberFormatException, IOException {
-		fillingArrayFromFile();
+	public boolean findSourceAccount() {
 
 		for (UsersAccount e : accounts) {
 			if (e.getAccountNumber() == getSourceAccount()) {
@@ -77,8 +75,7 @@ public class ArrayBasa extends MoneyTransfer {
 		return false;
 	}
 
-	public boolean findTargetAccount() throws NumberFormatException, IOException {
-		fillingArrayFromFile();
+	public boolean findTargetAccount() {
 
 		for (UsersAccount e : accounts) {
 			if (e.getAccountNumber() == getTargetAccount()) {
@@ -101,23 +98,26 @@ public class ArrayBasa extends MoneyTransfer {
 		return false;
 	}
 
-	public void transferToNewAccount() throws NumberFormatException, IOException {
-		fillingArrayFromFile();
-
+	public boolean transferMoneey() {
 		for (UsersAccount e : accounts) {
 
 			if (e.getAccountNumber() == getSourceAccount()) {
 				e.setAccountBalanse(e.getAccountBalanse() - getTransferAmount());
+				return true;
 			}
 		}
+		return false;
+	}
+
+	public boolean receivedMoney() {
 		for (UsersAccount e : accounts) {
 
 			if (e.getAccountNumber() == getTargetAccount()) {
 				e.setAccountBalanse(e.getAccountBalanse() + getTransferAmount());
+				return true;
 			}
 		}
-
-		fillingFileFromArray();
+		return false;
 	}
 
 	public void fillingFileFromArray() throws IOException {

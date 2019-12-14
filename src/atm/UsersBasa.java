@@ -11,12 +11,15 @@ public class UsersBasa extends ArrayBasa {
 	Scanner input = new Scanner(System.in);
 
 	public void addUser() throws IOException {
+
 		BufferedWriter bw = new BufferedWriter(new FileWriter("file.txt", true));
 
-		boolean correct = false;
+		fillingArrayFromFile();
+
 		String name = "";
 		int aNumber = 0;
 		double bNumber = 0;
+		boolean correct = false;
 
 		System.out.println("\t\t Creating a bank account.");
 		System.out.println("*********************************************************");
@@ -92,11 +95,11 @@ public class UsersBasa extends ArrayBasa {
 		bw.newLine();
 		bw.close();
 
-		fillingArrayFromFile();
-
 	}
 
 	public void transferMoney() throws IOException {
+
+		fillingArrayFromFile();
 
 		boolean correct = false;
 
@@ -159,11 +162,13 @@ public class UsersBasa extends ArrayBasa {
 
 		}
 
-		System.out.println("\n");
-		System.out.println("************* Your money have transferred. **************");
-		System.out.println("\n");
+		if (transferMoneey() == true && recievedMoney() == true) {
+			fillingFileFromArray();
 
-		transferToNewAccount();
+			System.out.println("\n");
+			System.out.println("************* Your money have transferred. **************");
+			System.out.println("\n");
+		}
 
 	}
 
