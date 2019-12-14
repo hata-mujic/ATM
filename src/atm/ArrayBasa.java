@@ -5,6 +5,9 @@ import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 
 public class ArrayBasa extends MoneyTransfer {
@@ -13,6 +16,12 @@ public class ArrayBasa extends MoneyTransfer {
 
 	public void fillingArrayFromFile() throws NumberFormatException, IOException {
 		accounts.removeAll(accounts); // empty the array
+
+		Path path = Paths.get("file.txt");
+
+		if (!Files.exists(path)) {
+			Files.createFile(path);
+		}
 
 		BufferedReader br = new BufferedReader(new FileReader("file.txt"));
 		String data;
