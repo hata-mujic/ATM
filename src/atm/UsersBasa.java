@@ -162,7 +162,7 @@ public class UsersBasa extends ArrayBasa {
 
 		}
 
-		if (transferMoneey() == true && recievedMoney() == true) {
+		if (transferMoneey() == true && receivedMoney() == true) {
 			fillingFileFromArray();
 
 			System.out.println("\n");
