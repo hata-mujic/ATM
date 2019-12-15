@@ -10,7 +10,6 @@ public class AtmTest {
 		Scanner input1 = new Scanner(System.in);
 
 		UsersBasa usersBasa = new UsersBasa();
-		ArrayBasa arrayBasa = new ArrayBasa();
 
 		int choice = -1;
 		String toContinue = "y";
@@ -48,7 +47,7 @@ public class AtmTest {
 				usersBasa.transferMoney();
 				break;
 			case 3:
-				arrayBasa.ViewAllUsersAccount();
+				usersBasa.viewAllUsersAccount();
 				break;
 			default:
 				System.out.println("Wrong Entry.");

@@ -97,9 +97,37 @@ public class UsersBasa extends ArrayBasa {
 
 	}
 
-	public void transferMoney() throws IOException {
-
+	public void transferMoney() throws NumberFormatException, IOException {
 		fillingArrayFromFile();
+
+		if (emptyFile() == true) {
+
+			System.out.println("\n");
+			System.out.println("*************** There is no users accounts. ***********");
+			System.out.println("\n");
+
+		} else {
+			qusetionsForTransferMoney();
+			successInTransferMoney();
+		}
+
+	}
+
+	public void viewAllUsersAccount() throws NumberFormatException, IOException {
+		fillingArrayFromFile();
+
+		if (emptyFile() == true) {
+
+			System.out.println("\n");
+			System.out.println("*************** There is no users accounts. ***********");
+			System.out.println("\n");
+
+		} else {
+			listOfUsersAccount();
+		}
+	}
+
+	public void qusetionsForTransferMoney() throws IOException {
 
 		boolean correct = false;
 
@@ -162,14 +190,21 @@ public class UsersBasa extends ArrayBasa {
 
 		}
 
-		if (transferMoneey() == true && receivedMoney() == true) {
+	}
+
+	public void successInTransferMoney() throws IOException {
+		if (withdrawMoney() == true && recievedMoney() == true) {
+
 			fillingFileFromArray();
 
 			System.out.println("\n");
 			System.out.println("************* Your money have transferred. **************");
 			System.out.println("\n");
+		} else {
+			System.out.println("\n");
+			System.out.println("************* Your money haven't transferred. ************");
+			System.out.println("\n");
 		}
-
 	}
 
 }

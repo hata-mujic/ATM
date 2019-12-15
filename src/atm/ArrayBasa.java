@@ -2,6 +2,7 @@ package atm;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -10,9 +11,16 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 
+
 public class ArrayBasa extends MoneyTransfer {
 
 	private ArrayList<UsersAccount> accounts = new ArrayList<>();
+
+	public boolean emptyFile() {
+		File file = new File("file.txt");
+
+		return file.length() == 0;
+	}
 
 	public void fillingArrayFromFile() throws NumberFormatException, IOException {
 		accounts.removeAll(accounts); // empty the array
@@ -39,22 +47,18 @@ public class ArrayBasa extends MoneyTransfer {
 		br.close();
 	}
 
-	public void ViewAllUsersAccount() throws NumberFormatException, IOException {
-		fillingArrayFromFile();
-
-		System.out.println("\t\tView all users account");
-		System.out.println("*********************************************************");
-		System.out.println("*********************************************************");
-		System.out.println("\n");
+	public void fillingFileFromArray() throws IOException {
+		BufferedWriter bw = new BufferedWriter(new FileWriter("file.txt"));
+		bw.write("");// empty the file
 
 		for (UsersAccount e : accounts) {
 
-			System.out.println("User name: " + e.getName());
-			System.out.println("User account: " + e.getAccountNumber());
-			System.out.println("User account balance: " + e.getAccountBalanse());
-			System.out.println("---------------------------------------------------------");
-			System.out.println("---------------------------------------------------------");
+			bw.write(e.toString());
+			bw.flush();
+			bw.newLine();
 		}
+
+		bw.close();
 	}
 
 /////////////////////////////////////////////////////////////////
@@ -107,7 +111,7 @@ public class ArrayBasa extends MoneyTransfer {
 		return false;
 	}
 
-	public boolean transferMoneey() {
+	public boolean withdrawMoney() {
 		for (UsersAccount e : accounts) {
 
 			if (e.getAccountNumber() == getSourceAccount()) {
@@ -118,7 +122,7 @@ public class ArrayBasa extends MoneyTransfer {
 		return false;
 	}
 
-	public boolean receivedMoney() {
+	public boolean recievedMoney() {
 		for (UsersAccount e : accounts) {
 
 			if (e.getAccountNumber() == getTargetAccount()) {
@@ -129,18 +133,22 @@ public class ArrayBasa extends MoneyTransfer {
 		return false;
 	}
 
-	public void fillingFileFromArray() throws IOException {
-		BufferedWriter bw = new BufferedWriter(new FileWriter("file.txt"));
-		bw.write("");// empty the file
+////////////////////////////////////////////////////////////////////////////////
+	public void listOfUsersAccount() throws NumberFormatException, IOException {
+
+		System.out.println("\t\tView all users account");
+		System.out.println("*********************************************************");
+		System.out.println("*********************************************************");
+		System.out.println("\n");
 
 		for (UsersAccount e : accounts) {
 
-			bw.write(e.toString());
-			bw.flush();
-			bw.newLine();
+			System.out.println("User name: " + e.getName());
+			System.out.println("User account: " + e.getAccountNumber());
+			System.out.println("User account balance: " + e.getAccountBalanse());
+			System.out.println("---------------------------------------------------------");
+			System.out.println("---------------------------------------------------------");
 		}
-
-		bw.close();
 	}
 
 }
